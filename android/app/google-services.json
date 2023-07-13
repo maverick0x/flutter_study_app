@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "855722263186",
+    "project_id": "study-app-tut",
+    "storage_bucket": "study-app-tut.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855722263186:android:5ff98ff90543c357dd5c4b",
+        "android_client_info": {
+          "package_name": "com.example.flutter_study_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855722263186-9iqn2r8i3gh42db97a359dh5l0i2bke2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_-fkS33ge1vo2BGX3_pVwHd4XMbwNM6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855722263186-9iqn2r8i3gh42db97a359dh5l0i2bke2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
