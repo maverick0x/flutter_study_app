@@ -1,19 +1,32 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import 'data_uploader_screen.dart';
-import 'firebase_options.dart';
+import 'screens/splash/introduction/introduction.dart';
+import 'screens/splash/splash_screen.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(
-    const GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DataUploaderScreen(),
-    ),
-  );
+void main() {
+  runApp(StudyApp());
 }
+
+class StudyApp extends StatelessWidget {
+  const StudyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: AppIntroductionScreen(),
+    );
+  }
+}
+
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
+//   runApp(
+//     const GetMaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: DataUploaderScreen(),
+//     ),
+//   );
+// }

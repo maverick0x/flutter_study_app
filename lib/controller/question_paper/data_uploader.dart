@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_study_app/firebase_ref/references.dart';
 import 'package:get/get.dart';
 
+import '../../firebase_ref/loading_status.dart';
 import '../../models/question_paper_model.dart';
 
 class DataUploader extends GetxController {
@@ -15,7 +16,12 @@ class DataUploader extends GetxController {
     super.onReady();
   }
 
+  final loadingStatus = LoadingStatus.loading.obs;
+
   void uploadData() async {
+    // change the status to loading...
+    loadingStatus.value = LoadingStatus.loading;
+
     // Get all json files path in the DB folder
     final manifestContent = await DefaultAssetBundle.of(Get.context!)
         .loadString('AssetManifest.json');
@@ -37,6 +43,8 @@ class DataUploader extends GetxController {
     final firestore = FirebaseFirestore.instance;
     // Create a batch variable since we're uploading in batches.
     var batch = firestore.batch();
+
+    // loop through the question papers and upload the first question papers
     for (var paper in questionPapers) {
       batch.set(questionPaperRF.doc(paper.id), {
         "title": paper.title,
@@ -45,7 +53,29 @@ class DataUploader extends GetxController {
         "time_seconds": paper.timeSeconds,
         "questions_count": paper.questions == null ? 0 : paper.questions!.length
       });
+
+      // loop the questions in each paper and upload the questions for each paper and it's correct answer
+      for (var questions in paper.questions!) {
+        final questionPath =
+            questionRF(paperId: paper.id, questionId: questions.id);
+        batch.set(questionPath, {
+          'question': questions.question,
+          'correct_answer': questions.correctAnswer,
+        });
+
+        // loop through the answers provided with each question and upload them
+        for (var answers in questions.answers) {
+          batch
+              .set(questionPath.collection('answers').doc(answers.identifier), {
+            'id': answers.identifier,
+            'answer': answers.answer,
+          });
+        }
+      }
     }
+
+    // submit operation
     await batch.commit();
+    loadingStatus.value = LoadingStatus.completed;
   }
 }
